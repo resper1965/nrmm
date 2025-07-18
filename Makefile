@@ -7,10 +7,6 @@ help: ## Show this help message
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-transform: ## Transform Tactical RMM to m.RMM
-	@chmod +x scripts/transform_to_mrmm.sh
-	@./scripts/transform_to_mrmm.sh
-
 build: ## Build all Docker images
 	docker-compose -f docker-compose.mrmm.yml build
 
@@ -55,23 +51,3 @@ dev: ## Start in development mode
 
 test: ## Run tests
 	docker-compose -f docker-compose.mrmm.yml exec api python manage.py test
-
-install: ## Install m.RMM (prepare environment)
-	@chmod +x install_mrmm.sh
-	@./install_mrmm.sh
-
-status: ## Show status of all services
-	docker-compose -f docker-compose.mrmm.yml ps
-
-restart: ## Restart all services
-	$(MAKE) down
-	$(MAKE) up
-
-frontend-logs: ## View frontend logs only
-	docker-compose -f docker-compose.mrmm.yml logs -f frontend
-
-backend-logs: ## View backend logs only
-	docker-compose -f docker-compose.mrmm.yml logs -f api
-
-db-logs: ## View database logs only
-	docker-compose -f docker-compose.mrmm.yml logs -f postgres
