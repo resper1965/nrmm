@@ -1,0 +1,8 @@
+
+# m.RMM specific
+.env
+.env.local
+.env.production
+data/
+logs/
+backup_*.sql
